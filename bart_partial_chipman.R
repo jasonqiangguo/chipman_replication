@@ -20,7 +20,7 @@ probit <- glm(Potency ~., data = data, family = binomial(link = "probit"))
 data$Potency<-factor(
   data$Potency,
   levels=c(0,1),
-  labels=c("active", "none"))
+  labels=c("none", "noneactive"))
 tc<-trainControl(method="cv",
                  number=5,#creates CV folds - 5 for this data
                  summaryFunction=twoClassSummary, # provides ROC summary stats in call to model
