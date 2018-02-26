@@ -5,18 +5,26 @@ path <- "/scratch/qg251/dbart_mid/chipman_replication"
 
 library(foreign)
 library(bartMachine)
-library(data.table)
+# library(data.table)
 library(dplyr)
 library(caret)
+library(pROC)
 
 
 
 ###### dataset with a binary dependent variable used in ESL https://web.stanford.edu/~hastie/ElemStatLearn/
 ###### 57 predictors and 4601 obs
-spam_data <- read.table("spam.data")
+spam_data <- read.table(file=paste0(path, "/spam.data"))
+# spam_data <- read.table("spam.data")
 
 probit <- glm(V58 ~., data = spam_data, family = binomial(link = "probit"), control = list(maxit = 1000))
 summary(probit)
+
+probit_prob <- predict(probit, type = "response")
+probit_roc <- roc(spam_data$V58 ~ probit_prob)
+plot(probit_roc)
+
+
 
 spam_data$V58 <- factor(spam_data$V58,
                         levels = c(0, 1),
