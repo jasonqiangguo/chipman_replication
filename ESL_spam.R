@@ -14,9 +14,9 @@ library(pROC)
 
 ###### dataset with a binary dependent variable used in ESL https://web.stanford.edu/~hastie/ElemStatLearn/
 ###### 57 predictors and 4601 obs
+setwd("/Users/qiangguo/Dropbox/dbart_mid/chipman_replication")
 spam_data <- read.table(file=paste0(path, "/spam.data"))
 # spam_data <- read.table("spam.data")
-
 probit <- glm(V58 ~., data = spam_data, family = binomial(link = "probit"), control = list(maxit = 1000))
 summary(probit)
 
